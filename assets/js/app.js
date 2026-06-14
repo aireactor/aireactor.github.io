@@ -1,43 +1,41 @@
-import { state } from "./state.js";
-import { createModel, trainModel } from "./neural.js";
-import { stepSimulation } from "./simulator.js";
-import { applyNeuralToSimulation, applySimulationToNeural } from "./bridge.js";
-import { render } from "./visualizer.js";
+import { agents } from "./agents.js";
+import { trainAgent } from "./trainer.js";
+import { state, stepSim } from "./simulator.js";
+import { push, draw } from "./graphs.js";
+import { renderField } from "./webgl.js";
+import { controls } from "./controls.js";
 
-let model;
+let selected = agents[0];
 
 async function init() {
-  await tf.setBackend("webgl");
-  await tf.ready();
+  renderField(document.getElementById("field"));
 
-  model = await createModel();
-
-  const canvas = document.getElementById("canvas");
-  render(canvas);
-
-  // main loop
   setInterval(async () => {
 
-    // 1. simulation step
-    stepSimulation();
+    stepSim();
 
-    // 2. neural training step
-    const result = await trainModel(model, state);
+    await trainAgent(selected, controls);
 
-    const loss = result.history.loss[0];
-    const acc = result.history.acc?.[0] || 0;
+    push(selected.accuracy);
+    draw(document.getElementById("graph"));
 
-    // 3. bridge interaction
-    applyNeuralToSimulation(loss, acc);
-    applySimulationToNeural();
+    document.getElementById("stats").innerHTML = `
+      TEMP: ${state.temperature.toFixed(2)}<br>
+      ENTROPY: ${state.entropy.toFixed(2)}<br>
+      ACC: ${selected.accuracy.toFixed(3)}
+    `;
 
-    console.log("STATE:", state);
-
-  }, 2000);
+  }, 1500);
 }
 
-window.setLearningRate = (v) => state.learningRate = v;
-window.setNoise = (v) => state.noise = v;
-window.setCoupling = (v) => state.coupling = v;
+window.trainAll = async () => {
+  for (const a of agents) {
+    await trainAgent(a, controls);
+  }
+};
+
+window.switchAgent = (name) => {
+  selected = agents.find(a => a.name === name);
+};
 
 init();

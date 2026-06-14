@@ -1,17 +1,18 @@
-import { state } from "./state.js";
+export const controls = {
+  lr: 0.001,
+  batch: 32,
+  noise: 0.01,
+  temperature: 20,
 
-export function setMode(m) {
-  state.mode = m;
-}
+  dropout: 0.2,
+  decay: 0.01,
+  momentum: 0.9,
 
-export function setLearningRate(v) {
-  state.learningRate = v;
-}
+  agentSwitch: "Alpha",
 
-export function setNoise(v) {
-  state.noise = v;
-}
+  mode: "training"
+};
 
-export function setCoupling(v) {
-  state.coupling = v;
+export function update(key, value) {
+  controls[key] = value;
 }

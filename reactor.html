@@ -1,24 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Computational Reactor Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0"></script>
 </head>
+
 <body>
 
-<h1>REACTOR LAB (Hybrid System)</h1>
+<div class="container">
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0"></script>
+  <!-- LEFT PANEL -->
+  <div class="panel">
+    <h3>CONTROL PANEL</h3>
 
-Learning Rate:
-<input type="number" onchange="setLearningRate(+this.value)">
+    <label>Learning Rate</label>
+    <input id="lr" type="number">
 
-Noise:
-<input type="number" onchange="setNoise(+this.value)">
+    <label>Batch Size</label>
+    <input id="batch" type="number">
 
-Coupling:
-<input type="number" onchange="setCoupling(+this.value)">
+    <label>Noise</label>
+    <input id="noise" type="number">
 
-<canvas id="canvas" width="500" height="200"></canvas>
+    <label>Temperature</label>
+    <input id="temp" type="number">
+
+    <label>Dropout</label>
+    <input id="dropout" type="number">
+
+    <label>Decay</label>
+    <input id="decay" type="number">
+
+    <button onclick="trainAll()">Train All Agents</button>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center">
+    <h2>REACTOR CORE</h2>
+
+    <canvas id="field"></canvas>
+    <canvas id="graph"></canvas>
+
+    <div id="stats"></div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel">
+    <h3>AGENTS</h3>
+    <button onclick="switchAgent('Alpha')">Alpha</button>
+    <button onclick="switchAgent('Beta')">Beta</button>
+    <button onclick="switchAgent('Gamma')">Gamma</button>
+  </div>
+
+</div>
 
 <script type="module" src="assets/js/app.js"></script>
 

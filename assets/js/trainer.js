@@ -1,26 +1,20 @@
-// trainer.js
-export async function train(model, data, config, mode) {
+export async function trainAgent(agent, config) {
 
-  let optimizer = tf.train.adam(config.learningRate);
+  const x = tf.randomNormal([200, 10]);
+  const y = tf.oneHot(tf.randomUniform([200], 0, 3, "int32"), 3);
 
-  model.compile({
-    optimizer,
-    loss: mode === "reinforcement"
-      ? "meanSquaredError"
-      : "categoricalCrossentropy",
+  agent.model.compile({
+    optimizer: tf.train.adam(config.lr),
+    loss: "categoricalCrossentropy",
     metrics: ["accuracy"]
   });
 
-  return await model.fit(data.x, data.y, {
-    batchSize: config.batchSize,
-    epochs: config.epochs,
-    shuffle: true,
-    validationSplit: 0.2,
-    callbacks: [
-      tf.callbacks.earlyStopping({
-        monitor: "loss",
-        patience: config.patience
-      })
-    ]
+  const history = await agent.model.fit(x, y, {
+    batchSize: config.batch,
+    epochs: 2
   });
+
+  agent.accuracy = history.history.acc?.[0] || 0;
+
+  return history;
 }
