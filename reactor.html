@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Computational Reactor Lab</title>
+</head>
 <body>
-  <h2>Reactor</h2>
 
-  <input id="input" placeholder="Enter knowledge">
-  <button onclick="run()">Process</button>
+<h1>REACTOR LAB (Hybrid System)</h1>
 
-  <script src="assets/js/reactor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0"></script>
+
+Learning Rate:
+<input type="number" onchange="setLearningRate(+this.value)">
+
+Noise:
+<input type="number" onchange="setNoise(+this.value)">
+
+Coupling:
+<input type="number" onchange="setCoupling(+this.value)">
+
+<canvas id="canvas" width="500" height="200"></canvas>
+
+<script type="module" src="assets/js/app.js"></script>
+
 </body>
 </html>

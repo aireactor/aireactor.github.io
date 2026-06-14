@@ -1,0 +1,11 @@
+{
+  "temperature": 25,
+  "control_rods": 50,
+  "learning_rate": 0.1,
+  "epoch": 0,
+  "memory_pressure": 10,
+  "graph_density": 0.2,
+  "system_status": "STABLE",
+  "mode": "MANUAL",
+  "energy_level": 70
+}
