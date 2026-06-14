@@ -1,0 +1,30 @@
+agireactor.github.io/
+│
+├── index.html
+├── login.html
+├── reactor.html
+├── chairman.html
+│
+├── assets/
+│   ├── css/
+│   │   └── main.css
+│   │
+│   └── js/
+│       ├── app.js
+│       ├── auth.js
+│       └── github.js
+│
+├── data/
+│   ├── users.json
+│   ├── reactor_state.json
+│   ├── memories.json
+│   └── graph.json
+│
+├── models/
+│   └── active/
+│       ├── model.json
+│       └── weights.bin
+│
+└── .github/
+    └── workflows/
+        └── deploy.yml
